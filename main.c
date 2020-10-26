@@ -4,17 +4,13 @@
 
 void leArquivo()
 {
-    char file_name[25];
     FILE *filePath;
 
-    printf("Digite o nome do arquivo de input:");
-    gets(file_name);
-
-    filePath = fopen(file_name, "r");
+    filePath = fopen("input.txt", "r");
 
     if (filePath == NULL)
     {
-        perror("Arquivo nao encontrado\n");
+        perror("Arquivo de input nao encontrado\n");
         exit(0);
     }
 
@@ -23,6 +19,13 @@ void leArquivo()
         printf("%c", caractere);
 
     fclose(filePath);
+}
+
+void menu(){
+    printf("[0]carga do arquivo (fornecer o nome do arquivo)\n");
+    printf("[1]entrada do programa via teclado (forma alternativa), evitando a necessidade de leitura do arquivo"\n);
+    printf("[2]inicio da execucao (passo-a-passo ou direta)\n");
+    printf("[3]reset - utilizado para limpar a memória/registradores\n");
 }
 
 int main(int argc, char const *argv[])

@@ -1,1 +1,16 @@
-vai tomar no cu lobosco
+add
+sub
+mult
+div
+and
+or
+slt
+sll
+addi
+lw
+sw3
+beq
+bne
+j
+jr
+jal
