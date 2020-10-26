@@ -23,7 +23,7 @@ void leArquivo()
 
 void menu(){
     printf("[0]carga do arquivo (fornecer o nome do arquivo)\n");
-    printf("[1]entrada do programa via teclado (forma alternativa), evitando a necessidade de leitura do arquivo"\n);
+    printf("[1]entrada do programa via teclado (forma alternativa), evitando a necessidade de leitura do arquivo\n");
     printf("[2]inicio da execucao (passo-a-passo ou direta)\n");
     printf("[3]reset - utilizado para limpar a memória/registradores\n");
 }
