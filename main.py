@@ -2,18 +2,17 @@ import os
 from os import pipe
 
 tipoDeEntrada = ''
-entrada = ''
+entrada = 'a'
 
 def entradaPorArquivo():
-    entrada = ''
+    global entrada
     aux = ''
     print('Digite o caminho do arquivo de entrada:')
-    caminhoDoArquivo = input()
-    entrada = open(caminhoDoArquivo, 'r')
-    return entrada
+    #caminhoDoArquivo = input()
+    entrada = open('input.txt', 'r')
 
 def entradaPorTeclado():
-    entrada = ''
+    global entrada
     aux = ''
     print('Digite a entrada e para finaliza-la, digite 2:')
     while aux != '2':
@@ -27,7 +26,6 @@ def entradaPorTeclado():
             entrada = ""
             print('Entrada alternativa indesejada: ' + aux)
             break
-    return entrada
 
 def tratarEntrada(str):
     if len(str) != 32:
@@ -71,7 +69,7 @@ def menu2():
 
 
 while tipoDeEntrada != '0':
-    tipoDeEntrada = 50
-    entrada = menu()
-    
+    tipoDeEntrada = 1
+    menu()
+    print(entrada.read())
 
