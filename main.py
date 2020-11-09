@@ -7,7 +7,7 @@ entrada = ''
 def entradaPorArquivo():
     entrada = ''
     aux = ''
-    print('digite o caminho do arquivo de entrada:')
+    print('Digite o caminho do arquivo de entrada:')
     caminhoDoArquivo = input()
     entrada = open(caminhoDoArquivo, 'r')
     return entrada
@@ -15,7 +15,7 @@ def entradaPorArquivo():
 def entradaPorTeclado():
     entrada = ''
     aux = ''
-    print('digite a entrada e para finaliza-la, digite 2:')
+    print('Digite a entrada e para finaliza-la, digite 2:')
     while aux != '2':
         aux = input()
         if aux == '2':
@@ -25,11 +25,13 @@ def entradaPorTeclado():
             entrada += "\n"
         else:
             entrada = ""
-            print('entrada alternativa indesejada: ' + aux)
+            print('Entrada alternativa indesejada: ' + aux)
             break
     return entrada
 
 def tratarEntrada(str):
+    if len(str) != 32:
+        return False
     for char in str:
         if char not in {'0', '1'}:
             return False
@@ -49,10 +51,9 @@ def menu():
     elif tipoDeEntrada == '2':
         entradaPorTeclado()
         menu2()
-    elif tipoDeEntrada not in {'0', '1', '2'}:
-        print('Entrada indesejada')
     
 def menu2():
+    os.system('cls' if os.name == 'nt' else 'clear')
     print('   1   | Execução completa')
     print('   2   | Execução por linha')
     print('   3   | Reset')
@@ -63,6 +64,7 @@ def menu2():
         print('Execução por linha')
     elif tipoDeEntrada == '3':
         print('reset')
+        menu()
     elif tipoDeEntrada not in {'1', '2', '3'}:
         print('Entrada indesejada')
         menu2()
@@ -71,6 +73,5 @@ def menu2():
 while tipoDeEntrada != '0':
     tipoDeEntrada = 50
     entrada = menu()
-    print(tipoDeEntrada)
     
 
