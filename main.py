@@ -35,17 +35,20 @@ def tratarEntrada(str):
             return False
     return True
 
-def menu(tipoDeEntrada):
+def menu():
     os.system('cls' if os.name == 'nt' else 'clear')
     print('Digite | Para')
     print('   0   | Sair')
     print('   1   | Leitura de comando por arquivo')
     print('   2   | Leitura de comandos via teclado')
+    global tipoDeEntrada
     tipoDeEntrada = input()
     if tipoDeEntrada == '1':
-        return entradaPorArquivo()
+        entradaPorArquivo()
+        menu2()
     elif tipoDeEntrada == '2':
-        return entradaPorTeclado()
+        entradaPorTeclado()
+        menu2()
     elif tipoDeEntrada not in {'0', '1', '2'}:
         print('Entrada indesejada')
     
@@ -60,11 +63,14 @@ def menu2():
         print('Execução por linha')
     elif tipoDeEntrada == '3':
         print('reset')
+    elif tipoDeEntrada not in {'1', '2', '3'}:
+        print('Entrada indesejada')
+        menu2()
 
 
 while tipoDeEntrada != '0':
     tipoDeEntrada = 50
-    entrada = menu(tipoDeEntrada)
+    entrada = menu()
     print(tipoDeEntrada)
-    menu2()
+    
 
