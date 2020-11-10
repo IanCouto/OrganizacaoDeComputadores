@@ -1,8 +1,10 @@
+from memoriaRAM import memoriaRAM
 import os
 from os import pipe
 
 tipoDeEntrada = ''
 entrada = 'a'
+
 
 def entradaPorArquivo():
     global entrada
@@ -11,6 +13,7 @@ def entradaPorArquivo():
     #caminhoDoArquivo = input()
     entrada = open('input.txt', 'r')
 
+
 def entradaPorTeclado():
     global entrada
     aux = ''
@@ -18,7 +21,7 @@ def entradaPorTeclado():
     while aux != '2':
         aux = input()
         if aux == '2':
-                break
+            break
         if tratarEntrada(aux):
             entrada += aux
             entrada += "\n"
@@ -27,6 +30,7 @@ def entradaPorTeclado():
             print('Entrada alternativa indesejada: ' + aux)
             break
 
+
 def tratarEntrada(str):
     if len(str) != 32:
         return False
@@ -34,6 +38,7 @@ def tratarEntrada(str):
         if char not in {'0', '1'}:
             return False
     return True
+
 
 def menu():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -49,7 +54,8 @@ def menu():
     elif tipoDeEntrada == '2':
         entradaPorTeclado()
         menu2()
-    
+
+
 def menu2():
     os.system('cls' if os.name == 'nt' else 'clear')
     print('   1   | Execução completa')
@@ -66,10 +72,15 @@ def menu2():
     elif tipoDeEntrada not in {'1', '2', '3'}:
         print('Entrada indesejada')
         menu2()
-
+        
+i = 0
+while i < 32:
+    memoriaRAM.set(memoriaRAM, i, 1)
+    i += 1
 
 while tipoDeEntrada != '0':
     tipoDeEntrada = 1
-    menu()
-    print(entrada.read())
-
+    
+    #menu()
+    #print(entrada.read())
+    
