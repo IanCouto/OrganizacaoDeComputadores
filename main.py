@@ -4,6 +4,7 @@ from os import pipe
 
 tipoDeEntrada = ''
 entrada = 'a'
+memoria = memoriaRAM()
 
 
 def entradaPorArquivo():
@@ -75,12 +76,15 @@ def menu2():
         
 i = 0
 while i < 32:
-    memoriaRAM.set(memoriaRAM, i, 1)
+    memoria.set(i, 1)
     i += 1
+print(memoria.get(0))
 
-while tipoDeEntrada != '0':
-    tipoDeEntrada = 1
+#while tipoDeEntrada != '0':
+#    tipoDeEntrada = 1
     
     #menu()
     #print(entrada.read())
-    
+
+
+
