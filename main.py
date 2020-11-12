@@ -73,18 +73,21 @@ def menu2():
     elif tipoDeEntrada not in {'1', '2', '3'}:
         print('Entrada indesejada')
         menu2()
-        
-i = 0
-while i < 32:
-    memoria.set(i, 1)
-    i += 1
-print(memoria.get(0))
-
-#while tipoDeEntrada != '0':
-#    tipoDeEntrada = 1
-    
-    #menu()
-    #print(entrada.read())
 
 
+def main():
+    entradaPorArquivo()
+    i = 0
+    for txt in entrada:
+        txt = txt.removesuffix("\n")
+        memoria.set(i, txt)
+        i += 4
 
+    i = 0
+    while i < memoria.size():
+        print('pos ' + str(i) + ': ' +str(memoria.get(i)))
+        i += 1
+
+
+if __name__ == "__main__":
+    main()
