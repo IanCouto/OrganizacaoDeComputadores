@@ -1,10 +1,14 @@
+from dicionario import traduzirComando
 from memoriaRAM import memoriaRAM
 import os
 from os import pipe
 
-tipoDeEntrada = ''
-entrada = 'a'
 memoria = memoriaRAM()
+
+def __init__(self):
+    self.tipoDeEntrada = ''
+    self.entrada = ''
+    self.memoria = memoriaRAM()
 
 
 def entradaPorArquivo():
@@ -74,8 +78,7 @@ def menu2():
         print('Entrada indesejada')
         menu2()
 
-
-def main():
+if __name__ == "__main__":
     entradaPorArquivo()
     i = 0
     for txt in entrada:
@@ -87,7 +90,4 @@ def main():
     while i < memoria.size():
         print('pos ' + str(i) + ': ' +str(memoria.get(i)))
         i += 1
-
-
-if __name__ == "__main__":
-    main()
+    traduzirComando(memoria)
