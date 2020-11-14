@@ -2,7 +2,6 @@ from dicionario import dicionario
 from memoriaRAM import memoriaRAM
 import os
 
-
 def __init__(self):
     self.tipoDeEntrada = ''
     self.entrada = ''
@@ -43,7 +42,6 @@ def tratarEntrada(str):
 
 
 def menu():
-    
     print('Digite | Para')
     print('   0   | Sair')
     print('   1   | Leitura de comando por arquivo')
@@ -76,17 +74,23 @@ def menu2():
         menu2()
 
 if __name__ == "__main__":
+    saida = None
     entradaPorArquivo()
     dicionario = dicionario()
     memoria = memoriaRAM(entrada, dicionario)
     i = 0
-    while i < memoriaRAM.size(memoria):
-        print('pos ' + str(i) + ': ' +str(memoria.get(i)))
-        i += 1
+    #while i < memoriaRAM.size(memoria):
+    #    print('pos ' + str(i) + ': ' +str(memoria.get(i)))
+    #    i += 1
     aux = memoria.getPC()
     while aux != -1:
-        print(dicionario.traduzirComando(aux))
-        for registrador in dicionario.memoriaRegistradores:
-            print(dicionario.dicRegistradores[registrador], '=', dicionario.memoriaRegistradores[registrador])
+        saida = open('output.txt', 'w')
+        saida.write(dicionario.traduzirComando(aux) + '\n')
+        for registrador in dicionario.memoriaRegistradores: 
+            string = str(dicionario.dicRegistradores[registrador]) + ' = ' + str(dicionario.memoriaRegistradores[registrador]) + '\n'
+            saida.write(str(string))
+            saida.flush()
         aux = memoria.getPC()
+        saida.close
+    saida.close() 
     #memoria.getRegistradores()

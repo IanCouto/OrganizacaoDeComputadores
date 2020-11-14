@@ -46,3 +46,5 @@ class memoriaRAM:
 
     def getRegistradores(self):
         return self.memoria[0:32]
+
+    
