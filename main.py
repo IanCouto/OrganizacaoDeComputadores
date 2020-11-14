@@ -1,4 +1,4 @@
-import dicionario
+from dicionario import dicionario
 from memoriaRAM import memoriaRAM
 import os
 
@@ -6,7 +6,7 @@ import os
 def __init__(self):
     self.tipoDeEntrada = ''
     self.entrada = ''
-
+    dicionario.__init__
 
 def entradaPorArquivo():
     global entrada
@@ -77,14 +77,16 @@ def menu2():
 
 if __name__ == "__main__":
     entradaPorArquivo()
-    memoria = memoriaRAM(entrada)
+    dicionario = dicionario()
+    memoria = memoriaRAM(entrada, dicionario)
     i = 0
     while i < memoriaRAM.size(memoria):
         print('pos ' + str(i) + ': ' +str(memoria.get(i)))
         i += 1
-    i = 32
-    entrada.close()
-    entradaPorArquivo()
-    for aux in entrada:
-        dicionario.traduzirComando(memoria.get(i))
-        i += 1
+    aux = memoria.getPC()
+    while aux != -1:
+        print(dicionario.traduzirComando(aux))
+        for registrador in dicionario.memoriaRegistradores:
+            print(dicionario.dicRegistradores[registrador], '=', dicionario.memoriaRegistradores[registrador])
+        aux = memoria.getPC()
+    #memoria.getRegistradores()
