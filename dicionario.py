@@ -12,15 +12,18 @@ def traduzirComando(str):
       return 0
     }
     """
-    opcode = str[26:31]
-    rs = str[21:25]
-    rt = str[16:20]
-    rd = str[12:12]
-    sa = str[6:10]
-    func = str[0:5]
-    immediate = str[0:15]
-    desvio = str[0:25]
-
+    opcode = str[26:32]
+    rs = str[21:26]
+    rt = str[16:21]
+    rd = str[11:16]
+    sa = str[6:11]
+    func = str[0:6]
+    immediate = str[0:16]
+    desvio = str[0:26]
+    if(func in dicComandosR):
+      print(dicComandosR[func], dicRegistradores[rs], dicRegistradores[rt], dicRegistradores[rd])
+    elif(func in dicComandosIJ):
+      print(dicComandosIJ[func], dicRegistradores[rs], dicRegistradores[rt], dicRegistradores[rd])
 """
   if (opcode == 0) {
     #Tipo R

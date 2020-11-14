@@ -43,7 +43,7 @@ def tratarEntrada(str):
 
 
 def menu():
-    os.system('cls' if os.name == 'nt' else 'clear')
+    
     print('Digite | Para')
     print('   0   | Sair')
     print('   1   | Leitura de comando por arquivo')
@@ -82,4 +82,9 @@ if __name__ == "__main__":
     while i < memoriaRAM.size(memoria):
         print('pos ' + str(i) + ': ' +str(memoria.get(i)))
         i += 1
-    dicionario.traduzirComando(memoria.get(32))
+    i = 32
+    entrada.close()
+    entradaPorArquivo()
+    for aux in entrada:
+        dicionario.traduzirComando(memoria.get(i))
+        i += 1
