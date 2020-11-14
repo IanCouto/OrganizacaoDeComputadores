@@ -79,13 +79,11 @@ if __name__ == "__main__":
     dicionario = dicionario()
     memoria = memoriaRAM(entrada, dicionario)
     i = 0
-    #while i < memoriaRAM.size(memoria):
-    #    print('pos ' + str(i) + ': ' +str(memoria.get(i)))
-    #    i += 1
     aux = memoria.getPC()
     while aux != -1:
         saida = open('output.txt', 'w')
         saida.write(dicionario.traduzirComando(aux) + '\n')
+        
         for registrador in dicionario.memoriaRegistradores: 
             string = str(dicionario.dicRegistradores[registrador]) + ' = ' + str(dicionario.memoriaRegistradores[registrador]) + '\n'
             saida.write(str(string))
@@ -93,4 +91,3 @@ if __name__ == "__main__":
         aux = memoria.getPC()
         saida.close
     saida.close() 
-    #memoria.getRegistradores()

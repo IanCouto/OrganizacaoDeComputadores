@@ -111,3 +111,77 @@ class dicionario:
             return self.dicComandosR[func] + " " + self.dicRegistradores[rs] + " " + self.dicRegistradores[rt] + " " + self.dicRegistradores[rd]
         elif(func in self.dicComandosIJ):
             return self.dicComandosIJ[func] + " " + self.dicRegistradores[rs] + " " + self.dicRegistradores[rt] + " " + self.dicRegistradores[rd]
+
+    def executaComando(comando, rg1, rg2, rg3):
+        if comando in dicComandosR:
+            if comando == '100000':
+                dicionario.add(rg1, rg2, rg3)
+            elif comando == '100010':
+                dicionario.sub(rg1, rg2, rg3)
+            elif comando == '011000':
+                dicionario.mult(rg1, rg2, rg3)
+            elif comando == '011010':
+                dicionario.div(rg1, rg2, rg3)
+            elif comando == '100100':
+                dicionario.and(rg1, rg2, rg3)
+            elif comando == '100101':
+                dicionario.or(rg1, rg2, rg3)
+            elif comando == '101010':
+                dicionario.slt(rg1, rg2, rg3)
+            elif comando == '000000':
+                dicionario.sll(rg1, rg2, rg3)
+            elif comando == '001000':
+                dicionario.jr(rg1)
+        elif comando in dicComandosIJ:
+            if comando == '001000':
+                dicionario.addi(rg1, rg2, rg3)
+            elif comando == '100011':
+                dicionario.lw(rg1, rg2, rg3)
+            elif comando == '101011':
+                dicionario.sw(rg1, rg2, rg3)
+            elif comando == '000100':
+                dicionario.beq(rg1, rg2, rg3)
+            elif comando == '000101':
+                dicionario.bne(rg1, rg2, rg3)
+            elif comando == '000010':
+                dicionario.j(rg1, rg2, rg3)
+            elif comando == '000011':
+                dicionario.jal(rg1, rg2, rg3)
+
+    def add(rg1, rg2, rg3):
+        memoriaRegistradores[rg1] = memoriaRegistradores[rg2] + memoriaRegistradores[rg3]
+    
+    def sub(rg1, rg2, rg3):
+        memoriaRegistradores[rg1] = memoriaRegistradores[rg2] - memoriaRegistradores[rg3]
+
+    def mult(rg1, rg2, rg3):
+        memoriaRegistradores[rg1] = memoriaRegistradores[rg2] * memoriaRegistradores[rg3]
+
+    def div(rg1, rg2, rg3):
+        memoriaRegistradores[rg1] = memoriaRegistradores[rg2] / memoriaRegistradores[rg3]
+
+    def and(rg1, rg2, rg3):
+        if memoriaRegistradores[rg2] == 1 & memoriaRegistradores[rg3] == 1:
+            memoriaRegistradores[rg1] = 1
+        else: 
+            memoriaRegistradores[rg1] = 0
+
+    def or(rg1, rg2, rg3):
+        if memoriaRegistradores[rg2] == 1 | memoriaRegistradores[rg3] == 1:
+            memoriaRegistradores[rg1] = 1
+        else: 
+            memoriaRegistradores[rg1] = 0
+    
+    def slt(rg1, rg2, rg3):
+        if memoriaRegistradores[rg2] < memoriaRegistradores[rg3]:
+            memoriaRegistradores[rg1] = 1
+        else: 
+            memoriaRegistradores[rg1] = 0
+    
+    def sll(rg1, rg2, rg3):
+        i = 0
+        #shift esquerda -> converter valor armazenado no regstrador rg2 para binário, realizar um 
+        #shift a esquerda dos numeros de acordo com o rg3 e armazenar no rg1
+    
+    def jr(rg1):
+        #pc pula para o endereço do registrador rg1
