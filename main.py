@@ -1,14 +1,11 @@
-from dicionario import traduzirComando
+import dicionario
 from memoriaRAM import memoriaRAM
 import os
-from os import pipe
 
-memoria = memoriaRAM()
 
 def __init__(self):
     self.tipoDeEntrada = ''
     self.entrada = ''
-    self.memoria = memoriaRAM()
 
 
 def entradaPorArquivo():
@@ -80,14 +77,9 @@ def menu2():
 
 if __name__ == "__main__":
     entradaPorArquivo()
+    memoria = memoriaRAM(entrada)
     i = 0
-    for txt in entrada:
-        txt = txt.removesuffix("\n")
-        memoria.set(i, txt)
-        i += 4
-
-    i = 0
-    while i < memoria.size():
+    while i < memoriaRAM.size(memoria):
         print('pos ' + str(i) + ': ' +str(memoria.get(i)))
         i += 1
-    traduzirComando(memoria)
+    dicionario.traduzirComando(memoria.get(32))

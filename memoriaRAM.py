@@ -1,19 +1,31 @@
+import dicionario
+
+memoria = []
 class memoriaRAM:
-    __memoria = None
 
-    def __init__(self):
-        self.__memoria = [] # private attribute
+    def __init__(self, entrada):
+        self.memoria = []
         i = 0
-        while i < 256:
+        for pos in dicionario.dicRegistradores:
+            self.memoria.insert(i, pos)
             i += 1
-            self.__memoria.insert(i, 0)
         
-    
-    def set(self, posicao, valor):
-        self.__memoria[posicao] = valor
+        for txt in entrada:
+            txt = txt.removesuffix("\n")
+            self.memoria.insert(i, txt)
+            i += 1
 
-    def get(self,posicao):
-        return self.__memoria[posicao]
+        j = 0
+        while j < 256:
+            i += 1
+            j += 1
+            self.memoria.insert(i, j)
+
+    def set(self, posicao, valor):
+        self.memoria[posicao] = valor
+
+    def get(self, posicao):
+        return self.memoria[posicao]
 
     def size(self):
-        return len(self.__memoria)-1
+        return len(self.memoria)

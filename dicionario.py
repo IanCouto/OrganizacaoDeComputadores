@@ -1,25 +1,25 @@
 a = ""
+
+
 def __init__(self):
-  a = "a"
+    a = "a"
 
-def traduzirComando(memoria):
-  """if(pc > enderecoFinalInstrucoes){
-    resetImagem()
-    $("#instrucaoAtual").html("Finalizado")
-    return 0
-  }
-  """
-  opcode = str(memoria.get(0))[26:31]
-  rs = str(memoria.get(0))[21:25]
-  rt = str(memoria.get(0))[16:20]
-  rd = str(memoria.get(0))[12:12]
-  sa = str(memoria.get(0))[6:10]
-  func = str(memoria.get(0))[0:5]
-  immediate = str(memoria.get(0))[0:15]
-  desvio = str(memoria.get(0))[0:25]
-  print("5")
 
-    
+def traduzirComando(str):
+    """if(pc > enderecoFinalInstrucoes){
+      resetImagem()
+      $("#instrucaoAtual").html("Finalizado")
+      return 0
+    }
+    """
+    opcode = str[26:31]
+    rs = str[21:25]
+    rt = str[16:20]
+    rd = str[12:12]
+    sa = str[6:10]
+    func = str[0:5]
+    immediate = str[0:15]
+    desvio = str[0:25]
 
 """
   if (opcode == 0) {
@@ -113,25 +113,25 @@ def traduzirComando(memoria):
 }
 """
 dicComandosR = {
-    '00100000': "add",
-    '00100010': "sub",
-    '00011000': "mult",
-    '00011010': "div",
-    '00100100': "and",
-    '00100101': "or",
-    '00101010': "slt",
-    '00000000': "sll",
-    '00001000': "jr",
+    '100000': "add",
+    '100010': "sub",
+    '011000': "mult",
+    '011010': "div",
+    '100100': "and",
+    '100101': "or",
+    '101010': "slt",
+    '000000': "sll",
+    '001000': "jr",
 }
 
 dicComandosIJ = {
-    '00001000': "addi",
-    '00100011': "lw",
-    '00101011': "sw",
-    '00000100': "beq",
-    '00000101': "bne",
-    '00000010': "j",
-    '00000011': "jal",
+    '001000': "addi",
+    '100011': "lw",
+    '101011': "sw",
+    '000100': "beq",
+    '000101': "bne",
+    '000010': "j",
+    '000011': "jal",
 }
 
 dicRegistradores = {
