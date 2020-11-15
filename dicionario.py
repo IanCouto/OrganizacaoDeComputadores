@@ -111,7 +111,7 @@ class dicionario:
             return self.dicComandosR[func] + " " + self.dicRegistradores[rs] + " " + self.dicRegistradores[rt] + " " + self.dicRegistradores[rd]
         elif(func in self.dicComandosIJ):
             return self.dicComandosIJ[func] + " " + self.dicRegistradores[rs] + " " + self.dicRegistradores[rt] + " " + self.dicRegistradores[rd]
-
+    """
     def executaComando(comando, rg1, rg2, rg3):
         if comando in dicComandosR:
             if comando == '100000':
@@ -185,3 +185,4 @@ class dicionario:
     
     def jr(rg1):
         #pc pula para o endereço do registrador rg1
+        """
