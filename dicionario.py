@@ -98,124 +98,149 @@ class dicionario:
             '11111': 1,
         }
 
-    def traduzirComando(self, str):
-        opcode = str[26:32]
-        rs = str[21:26]
-        rt = str[16:21]
-        rd = str[11:16]
-        sa = str[6:11]
-        func = str[0:6]
-        immediate = str[0:16]
-        desvio = str[0:26]
-        if(func in self.dicComandosR):
-            return self.dicComandosR[func] + " " + self.dicRegistradores[rs] + " " + self.dicRegistradores[rt] + " " + self.dicRegistradores[rd]
-        elif(func in self.dicComandosIJ):
-            return self.dicComandosIJ[func] + " " + self.dicRegistradores[rs] + " " + self.dicRegistradores[rt] + " " + self.dicRegistradores[rd]
+    def traduzirComando(self, comando):
+        opcode = comando[0:6] 
+        if opcode == '000000':
+            func = comando[26:32]
+        else:
+            func = comando[0:6]
+        rs = comando[6:11]
+        rt = comando[11:16]
+        rd = comando[16:21]
+        sa = comando[21:26]
+        immediate = comando[16:32]
+        alvo = comando[6:32]
+        if opcode == '000000' and func in self.dicComandosR:
+            if func == '001000':
+                return self.dicComandosR[func] + " " + self.dicRegistradores[rs]
+            elif func == '000000':
+                return self.dicComandosR[func] + " " + self.dicRegistradores[rt] + " " + self.dicRegistradores[rd] + " " + hex(int(sa))
+            else:  
+                return self.dicComandosR[func] + " " + self.dicRegistradores[rs] + " " + self.dicRegistradores[rt] + " " + self.dicRegistradores[rd]
+        elif func in self.dicComandosIJ:
+            if func == '001000':
+                return self.dicComandosIJ[func] + " " + self.dicRegistradores[rs] + " " + self.dicRegistradores[rt] + " " + str(int(immediate, 10))
+            elif func == '100011' or func == '101011':
+                return self.dicComandosIJ[func] + " " + self.dicRegistradores[rs] + " " + str(int(immediate,10)) + "(" + self.dicRegistradores[rt] + ")"
+            elif func == '000010' or func == '000011':
+                return self.dicComandosIJ[func] + " " + hex(int(alvo))
+            else:
+                return self.dicComandosIJ[func] + " " + self.dicRegistradores[rs] + " " + self.dicRegistradores[rt] + " " + self.dicRegistradores[rd]
 
-    def executaComando(comando, rg1, rg2, rg3):
-        if comando in dicComandosR:
-            if comando == '100000':
-                dicionario.add(rg1, rg2, rg3)
-            elif comando == '100010':
-                dicionario.sub(rg1, rg2, rg3)
-            elif comando == '011000':
-                dicionario.mult(rg1, rg2, rg3)
-            elif comando == '011010':
-                dicionario.div(rg1, rg2, rg3)
-            elif comando == '100100':
-                dicionario.and(rg1, rg2, rg3)
-            elif comando == '100101':
-                dicionario.or(rg1, rg2, rg3)
-            elif comando == '101010':
-                dicionario.slt(rg1, rg2, rg3)
-            elif comando == '000000':
-                dicionario.sll(rg1, rg2, rg3)
-            elif comando == '001000':
-                dicionario.jr(rg1)
-        elif comando in dicComandosIJ:
-            if comando == '001000':
-                dicionario.addi(rg1, rg2, rg3)
-            elif comando == '100011':
-                dicionario.lw(rg1, rg2, rg3)
-            elif comando == '101011':
-                dicionario.sw(rg1, rg2, rg3)
-            elif comando == '000100':
-                dicionario.beq(rg1, rg2, rg3)
-            elif comando == '000101':
-                dicionario.bne(rg1, rg2, rg3)
-            elif comando == '000010':
-                dicionario.j(rg1, rg2, rg3)
-            elif comando == '000011':
-                dicionario.jal(rg1, rg2, rg3)
+    def executaComando(self, comando):
+        opcode = comando[0:6] 
+        if opcode == '000000':
+            func = comando[26:32]
+        else:
+            func = comando[0:6]
+        rs = comando[6:11]
+        rt = comando[11:16]
+        rd = comando[16:21]
+        sa = comando[21:26]
+        immediate = comando[16:32]
+        alvo = comando[6:32]
+        if func in self.dicComandosR:
+            if func == '100000':
+                self.add(rs, rt, rd)
+            elif func == '100010':
+                self.sub(rs, rt, rd)
+            elif func == '011000':
+                self.mult(rs, rt, rd)
+            elif func == '011010':
+                self.div(rs, rt, rd)
+            elif func == '100100':
+                self.myAnd(rs, rt, rd)
+            elif func == '100101':
+                self.myOr(rs, rt, rd)
+            elif func == '101010':
+                self.slt(rs, rt,  rd)
+            elif func == '000000':
+                self.sll(rt, rd, sa)
+            elif func == '001000':
+                self.jr(rs)
+        elif func in self.dicComandosIJ:
+            if func == '001000':
+                self.addi(rs, rt, immediate)
+            elif func == '100011':
+                self.lw(rs, rt, immediate)
+            elif func == '101011':
+                self.sw(rs, rt, immediate)
+            elif func == '000100':
+                self.beq(rs, rt, rd)
+            elif func == '000101':
+                self.bne(rs, rt, rd)
+            elif func == '000010':
+                self.j(alvo)
+            elif func == '000011':
+                self.jal(alvo)
 
 
 # ---------- COMANDOS TYPE-R ----------
-    def add(rg1, rg2, rg3):
-        memoriaRegistradores[rg1] = memoriaRegistradores[rg2] + memoriaRegistradores[rg3]
+    def add(self, rs, rt, rd):
+        self.memoriaRegistradores[rs] = self.memoriaRegistradores[rt] + self.memoriaRegistradores[rd]
     
-    def sub(rg1, rg2, rg3):
-        memoriaRegistradores[rg1] = memoriaRegistradores[rg2] - memoriaRegistradores[rg3]
+    def sub(self, rs, rt, rd):
+        self.memoriaRegistradores[rs] = self.memoriaRegistradores[rt] - self.memoriaRegistradores[rd]
 
-    def mult(rg1, rg2, rg3):
-        memoriaRegistradores[rg1] = memoriaRegistradores[rg2] * memoriaRegistradores[rg3]
+    def mult(self, rs, rt, rd):
+        self.memoriaRegistradores[rs] = self.memoriaRegistradores[rt] * self.memoriaRegistradores[rd]
 
-    def div(rg1, rg2, rg3):
-        memoriaRegistradores[rg1] = memoriaRegistradores[rg2] / memoriaRegistradores[rg3]
+    def div(self, rs, rt, rd):
+        self.memoriaRegistradores[rs] = self.memoriaRegistradores[rt] / self.memoriaRegistradores[rd]
 
-    def and(rg1, rg2, rg3):
-        if memoriaRegistradores[rg2] == 1 & memoriaRegistradores[rg3] == 1:
-            memoriaRegistradores[rg1] = 1
+    def myAnd(self, rs, rt, rd):
+        if self.memoriaRegistradores[rt] == 1 and self.memoriaRegistradores[rd] == 1:
+            self.memoriaRegistradores[rs] = 1
         else: 
-            memoriaRegistradores[rg1] = 0
+            self.memoriaRegistradores[rs] = 0
 
-    def or(rg1, rg2, rg3):
-        if memoriaRegistradores[rg2] == 1 | memoriaRegistradores[rg3] == 1:
-            memoriaRegistradores[rg1] = 1
+    def myOr(self, rs, rt, rd):
+        if self.memoriaRegistradores[rt] == 1 or self.memoriaRegistradores[rd] == 1:
+            self.memoriaRegistradores[rs] = 1
         else: 
-            memoriaRegistradores[rg1] = 0
+            self.memoriaRegistradores[rs] = 0
     
-    def slt(rg1, rg2, rg3):
-        if memoriaRegistradores[rg2] < memoriaRegistradores[rg3]:
-            memoriaRegistradores[rg1] = 1
+    def slt(self, rs, rt, rd):
+        if self.memoriaRegistradores[rt] < self.memoriaRegistradores[rd]:
+            self.memoriaRegistradores[rs] = 1
         else: 
-            memoriaRegistradores[rg1] = 0
+            self.memoriaRegistradores[rs] = 0
     
-    def sll(rg1, rg2, bits):
-        memoriaRegistradores[rg1] = memoriaRegistradores[rg2] << bits
-        print(memoriaRegistradores[rg1])
-        #shift esquerda -> converter valor armazenado no regstrador rg2 para binário, realizar um 
-        #shift a esquerda dos numeros de acordo com o rg3 e armazenar no rg1
+    def sll(self, rs, rt, bits):
+        self.memoriaRegistradores[rs] = self.memoriaRegistradores[rt] << int(bits)
+        #shift esquerda -> converter valor armazenado no regstrador rt para binário, realizar um 
+        #shift a esquerda dos numeros de acordo com o rd e armazenar no rs
     
-    def jr(rg1):
-        PC = rg1
-        #pc pula para o endereço do registrador rg1
+    def jr(self, rs):
+        PC = rs
+        #pc pula para o endereço do registrador rs
 
 # ---------- COMANDOS TYPE-IJ ----------
 
-    def addi(rg1, rg2, val):
-        memoriaRegistradores[rg1] = memoriaRegistradores[rg2] + val
+    def addi(self, rs, rt, val):
+        self.memoriaRegistradores[rs] = self.memoriaRegistradores[rt] + val
 
-    def lw(rg1,val,rg2):
-        memoriaRegistradores[rg1] = memoriaRegistradores[memoriaRegistradores[rg2] + val]
+    def lw(self, rs,val,rt):
+        self.memoriaRegistradores[rs] = self.memoriaRegistradores[self.memoriaRegistradores[rt] + val]
         # Load Word: Esta instrução carrega uma palavra (estrutura de 4 bytes)
         # localizada no endereço representado pela soma do valor
         # armazenado no registrador $r2 mais 4. O resultado é armazenado em $r1.
-    def sw(rg1,val,rg2):
-        memoriaRegistradores[memoriaRegistradores[rg2] + val] = memoriaRegistradores[rg1]
+    def sw(self, rs,val,rt):
+        self.memoriaRegistradores[self.memoriaRegistradores[rt] + val] = self.memoriaRegistradores[rs]
         # Store Word: Esta instrução carrega uma palavra (estrutura de 4 bytes)
         # localizada no registrador $r1 e armazena no endereço representado 
         # pela soma do valor armazenado no registrador $r2 mais 4.     
-    def beq(rg1, rg2, destino):
-        if(memoriaRegistradores[rg1] == memoriaRegistradores[rg2]):
+    def beq(self, rs, rt, destino):
+        if(self.memoriaRegistradores[rs] == self.memoriaRegistradores[rt]):
             PC = destino
         # Essa função verifica se o valor de um registrador é igual ao outro.
         # Caso verdadeiro muda o valor de PC para o destino informado.
         # Caso falso não faz nada.
-    def bne(rg1, rg2, destino):
-        if(memoriaRegistradores[rg1] != memoriaRegistradores[rg2]):
+    def bne(self, rs, rt, destino):
+        if(self.memoriaRegistradores[rs] != self.memoriaRegistradores[rt]):
             PC = destino
         # A função é semelhante a beq.
         # Nessa função o valor de PC só é alterado caso o valor dos registradores forem diferentes.
-    def j (destino):
+    def j (self, destino):
         PC = destino
         # Essa função faz com que o programa passe a executar a instrução encontrada no endereço informado.

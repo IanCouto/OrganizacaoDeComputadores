@@ -62,10 +62,37 @@ def menu2():
     print('   2   | Execução por linha')
     print('   3   | Reset')
     tipoDeEntrada = input()
+    i = 0
+    aux = memoria.getPC()
+    saida = None
     if tipoDeEntrada == '1':
         print('Execução completa')
+        while aux != -1:
+            saida = open('output.txt', 'w')
+            saida.write(dicionario.traduzirComando(aux) + '\n')
+        
+            for registrador in dicionario.memoriaRegistradores: 
+                string = str(dicionario.dicRegistradores[registrador]) + ' = ' + str(dicionario.memoriaRegistradores[registrador]) + '\n'
+                saida.write(str(string))
+                saida.flush()
+            aux = memoria.getPC()
+            saida.close
+
     elif tipoDeEntrada == '2':
         print('Execução por linha')
+        while aux != -1:
+            saida = open('output.txt', 'w')
+            saida.write(dicionario.traduzirComando(aux) + '\n')
+        
+            for registrador in dicionario.memoriaRegistradores: 
+                string = str(dicionario.dicRegistradores[registrador]) + ' = ' + str(dicionario.memoriaRegistradores[registrador]) + '\n'
+                saida.write(str(string))
+                saida.flush()
+
+            aux = memoria.getPC()
+            saida.close
+            input()
+
     elif tipoDeEntrada == '3':
         print('reset')
         menu()
@@ -80,14 +107,13 @@ if __name__ == "__main__":
     memoria = memoriaRAM(entrada, dicionario)
     i = 0
     aux = memoria.getPC()
+    saida = open('output.txt', 'w')
     while aux != -1:
-        saida = open('output.txt', 'w')
         saida.write(dicionario.traduzirComando(aux) + '\n')
-        
+        dicionario.executaComando(aux)
         for registrador in dicionario.memoriaRegistradores: 
             string = str(dicionario.dicRegistradores[registrador]) + ' = ' + str(dicionario.memoriaRegistradores[registrador]) + '\n'
             saida.write(str(string))
             saida.flush()
         aux = memoria.getPC()
-        saida.close
     saida.close()
