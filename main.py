@@ -90,4 +90,4 @@ if __name__ == "__main__":
             saida.flush()
         aux = memoria.getPC()
         saida.close
-    saida.close() 
+    saida.close()

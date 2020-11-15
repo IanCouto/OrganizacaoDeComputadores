@@ -111,7 +111,7 @@ class dicionario:
             return self.dicComandosR[func] + " " + self.dicRegistradores[rs] + " " + self.dicRegistradores[rt] + " " + self.dicRegistradores[rd]
         elif(func in self.dicComandosIJ):
             return self.dicComandosIJ[func] + " " + self.dicRegistradores[rs] + " " + self.dicRegistradores[rt] + " " + self.dicRegistradores[rd]
-    """
+
     def executaComando(comando, rg1, rg2, rg3):
         if comando in dicComandosR:
             if comando == '100000':
@@ -148,6 +148,8 @@ class dicionario:
             elif comando == '000011':
                 dicionario.jal(rg1, rg2, rg3)
 
+
+# ---------- COMANDOS TYPE-R ----------
     def add(rg1, rg2, rg3):
         memoriaRegistradores[rg1] = memoriaRegistradores[rg2] + memoriaRegistradores[rg3]
     
@@ -178,11 +180,42 @@ class dicionario:
         else: 
             memoriaRegistradores[rg1] = 0
     
-    def sll(rg1, rg2, rg3):
-        i = 0
+    def sll(rg1, rg2, bits):
+        memoriaRegistradores[rg1] = memoriaRegistradores[rg2] << bits
+        print(memoriaRegistradores[rg1])
         #shift esquerda -> converter valor armazenado no regstrador rg2 para binário, realizar um 
         #shift a esquerda dos numeros de acordo com o rg3 e armazenar no rg1
     
     def jr(rg1):
+        PC = rg1
         #pc pula para o endereço do registrador rg1
-        """
+
+# ---------- COMANDOS TYPE-IJ ----------
+
+    def addi(rg1, rg2, val):
+        memoriaRegistradores[rg1] = memoriaRegistradores[rg2] + val
+
+    def lw(rg1,val,rg2):
+        memoriaRegistradores[rg1] = memoriaRegistradores[memoriaRegistradores[rg2] + val]
+        # Load Word: Esta instrução carrega uma palavra (estrutura de 4 bytes)
+        # localizada no endereço representado pela soma do valor
+        # armazenado no registrador $r2 mais 4. O resultado é armazenado em $r1.
+    def sw(rg1,val,rg2):
+        memoriaRegistradores[memoriaRegistradores[rg2] + val] = memoriaRegistradores[rg1]
+        # Store Word: Esta instrução carrega uma palavra (estrutura de 4 bytes)
+        # localizada no registrador $r1 e armazena no endereço representado 
+        # pela soma do valor armazenado no registrador $r2 mais 4.     
+    def beq(rg1, rg2, destino):
+        if(memoriaRegistradores[rg1] == memoriaRegistradores[rg2]):
+            PC = destino
+        # Essa função verifica se o valor de um registrador é igual ao outro.
+        # Caso verdadeiro muda o valor de PC para o destino informado.
+        # Caso falso não faz nada.
+    def bne(rg1, rg2, destino):
+        if(memoriaRegistradores[rg1] != memoriaRegistradores[rg2]):
+            PC = destino
+        # A função é semelhante a beq.
+        # Nessa função o valor de PC só é alterado caso o valor dos registradores forem diferentes.
+    def j (destino):
+        PC = destino
+        # Essa função faz com que o programa passe a executar a instrução encontrada no endereço informado.
