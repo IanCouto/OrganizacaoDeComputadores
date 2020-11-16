@@ -3,7 +3,6 @@ dicComandosIJ = dict()
 dicRegistradores = dict()
 memoriaRegistradores = dict()
 
-
 class dicionario:
     def __init__(self):
         self.dicComandosR = {
@@ -127,7 +126,7 @@ class dicionario:
             else:
                 return self.dicComandosIJ[func] + " " + self.dicRegistradores[rs] + " " + self.dicRegistradores[rt] + " " + self.dicRegistradores[rd]
 
-    def executaComando(self, comando):
+    def executaComando(self, comando, memoria):
         opcode = comando[0:6] 
         if opcode == '000000':
             func = comando[26:32]
@@ -139,7 +138,7 @@ class dicionario:
         sa = comando[21:26]
         immediate = comando[16:32]
         alvo = comando[6:32]
-        if func in self.dicComandosR:
+        if opcode == '000000' and func in self.dicComandosR:
             if func == '100000':
                 self.add(rs, rt, rd)
             elif func == '100010':
@@ -157,7 +156,7 @@ class dicionario:
             elif func == '000000':
                 self.sll(rt, rd, sa)
             elif func == '001000':
-                self.jr(rs)
+                self.jr(rs, memoria)
         elif func in self.dicComandosIJ:
             if func == '001000':
                 self.addi(rs, rt, immediate)
@@ -166,11 +165,11 @@ class dicionario:
             elif func == '101011':
                 self.sw(rs, rt, immediate)
             elif func == '000100':
-                self.beq(rs, rt, rd)
+                self.beq(rs, rt, rd, memoria)
             elif func == '000101':
-                self.bne(rs, rt, rd)
+                self.bne(rs, rt, rd, memoria)
             elif func == '000010':
-                self.j(alvo)
+                self.j(alvo, memoria)
             elif func == '000011':
                 self.jal(alvo)
 
@@ -211,36 +210,45 @@ class dicionario:
         #shift esquerda -> converter valor armazenado no regstrador rt para binário, realizar um 
         #shift a esquerda dos numeros de acordo com o rd e armazenar no rs
     
-    def jr(self, rs):
-        PC = rs
+    def jr(self, rs, memoria):
+        memoria.setPC(int(str(int(rs,2)),10))
         #pc pula para o endereço do registrador rs
 
 # ---------- COMANDOS TYPE-IJ ----------
 
     def addi(self, rs, rt, val):
-        self.memoriaRegistradores[rs] = self.memoriaRegistradores[rt] + val
+        self.memoriaRegistradores[rs] = self.memoriaRegistradores[rt] + (int(val,2))
+        print()
 
-    def lw(self, rs,val,rt):
-        self.memoriaRegistradores[rs] = self.memoriaRegistradores[self.memoriaRegistradores[rt] + val]
+    def lw(self, rs,rt,val):
+        pos = '{0:05b}'.format(self.memoriaRegistradores[rt] + int(str(val), 10))
+        if pos in self.memoriaRegistradores:
+            self.memoriaRegistradores[rs] = self.memoriaRegistradores[pos]
+        else:
+            print('posição inexistente')
         # Load Word: Esta instrução carrega uma palavra (estrutura de 4 bytes)
         # localizada no endereço representado pela soma do valor
         # armazenado no registrador $r2 mais 4. O resultado é armazenado em $r1.
-    def sw(self, rs,val,rt):
-        self.memoriaRegistradores[self.memoriaRegistradores[rt] + val] = self.memoriaRegistradores[rs]
+    def sw(self, rs,rt,val):
+        pos = '{0:05b}'.format(self.memoriaRegistradores[rt] + int(str(val), 10))
+        if pos in self.memoriaRegistradores:
+            self.memoriaRegistradores[pos] = self.memoriaRegistradores[rs]
+        else:
+            print('posição inexistente')
         # Store Word: Esta instrução carrega uma palavra (estrutura de 4 bytes)
         # localizada no registrador $r1 e armazena no endereço representado 
         # pela soma do valor armazenado no registrador $r2 mais 4.     
-    def beq(self, rs, rt, destino):
+    def beq(self, rs, rt, destino, memoria):
         if(self.memoriaRegistradores[rs] == self.memoriaRegistradores[rt]):
-            PC = destino
+            memoria.setPC(int(str(int(destino,2)),10))
         # Essa função verifica se o valor de um registrador é igual ao outro.
         # Caso verdadeiro muda o valor de PC para o destino informado.
         # Caso falso não faz nada.
-    def bne(self, rs, rt, destino):
+    def bne(self, rs, rt, destino, memoria):
         if(self.memoriaRegistradores[rs] != self.memoriaRegistradores[rt]):
-            PC = destino
+            memoria.setPC(int(str(int(destino,2)),10))
         # A função é semelhante a beq.
         # Nessa função o valor de PC só é alterado caso o valor dos registradores forem diferentes.
-    def j (self, destino):
-        PC = destino
+    def j (self, destino, memoria):
+        memoria.setPC(int(str(int(destino,2)),10))
         # Essa função faz com que o programa passe a executar a instrução encontrada no endereço informado.

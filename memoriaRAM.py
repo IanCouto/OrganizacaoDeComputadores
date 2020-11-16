@@ -1,5 +1,3 @@
-import dicionario
-
 memoria = []
 pc = 31
 
@@ -43,6 +41,9 @@ class memoriaRAM:
             self.pc -= 1
             print('Instruções Finalizadas!')
             return -1
+
+    def setPC(self, pc):
+        self.pc = pc
 
     def getRegistradores(self):
         return self.memoria[0:32]

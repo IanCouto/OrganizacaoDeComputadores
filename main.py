@@ -2,10 +2,11 @@ from dicionario import dicionario
 from memoriaRAM import memoriaRAM
 import os
 
+
 def __init__(self):
     self.tipoDeEntrada = ''
     self.entrada = ''
-    dicionario.__init__
+    memoria = None
 
 def entradaPorArquivo():
     global entrada
@@ -110,7 +111,7 @@ if __name__ == "__main__":
     saida = open('output.txt', 'w')
     while aux != -1:
         saida.write(dicionario.traduzirComando(aux) + '\n')
-        dicionario.executaComando(aux)
+        dicionario.executaComando(aux, memoria)
         for registrador in dicionario.memoriaRegistradores: 
             string = str(dicionario.dicRegistradores[registrador]) + ' = ' + str(dicionario.memoriaRegistradores[registrador]) + '\n'
             saida.write(str(string))
