@@ -7,6 +7,7 @@ class memoriaRAM:
     def __init__(self, entrada, dicionario):
         self.memoria = []
         self.pc = 31
+        self.quantInstrucoes = 0
         i = 0
         for pos in dicionario.dicRegistradores:
             self.memoria.insert(i, pos)
@@ -16,12 +17,13 @@ class memoriaRAM:
             txt = txt.removesuffix("\n")
             self.memoria.insert(i, txt)
             i += 1
+            self.quantInstrucoes += 1
 
         j = 0
-        while j < 256:
-            i += 1
-            j += 1
+        while j <= 128:
             self.memoria.insert(i, j)
+            i += 1
+            j += 2
 
     def set(self, posicao, valor):
         self.memoria[posicao] = valor
@@ -34,12 +36,11 @@ class memoriaRAM:
 
     def getPC(self):
         self.pc += 1
+        self.pc = int(self.pc)
         aux = self.memoria[self.pc]
-        if(len(str(aux)) == len('00000001010100000100100000100000')):
+        if(len(str(aux)) == len('00000000000000000000000000000000')):
             return aux
         else:
-            self.pc -= 1
-            print('Instruções Finalizadas!')
             return -1
 
     def setPC(self, pc):
@@ -48,4 +49,9 @@ class memoriaRAM:
     def getRegistradores(self):
         return self.memoria[0:32]
 
-    
+    def printMemoriaDeDados(self, saida):
+        i = 32 + self.quantInstrucoes
+        saida.write('\nMemoria de dados:\n')
+        while i < 106:
+            saida.write(str(hex(i)) + ': ' + str(self.memoria[i]) + '\n')
+            i += 1

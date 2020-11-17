@@ -1,6 +1,5 @@
 from dicionario import dicionario
 from memoriaRAM import memoriaRAM
-import os
 
 
 def __init__(self):
@@ -58,7 +57,6 @@ def menu():
 
 
 def menu2():
-    os.system('cls' if os.name == 'nt' else 'clear')
     print('   1   | Execução completa')
     print('   2   | Execução por linha')
     print('   3   | Reset')
@@ -68,31 +66,52 @@ def menu2():
     saida = None
     if tipoDeEntrada == '1':
         print('Execução completa')
+        aux = memoria.getPC()
+        saida = open('output.txt', 'w')
         while aux != -1:
-            saida = open('output.txt', 'w')
+            saida.write('====================================\n')
             saida.write(dicionario.traduzirComando(aux) + '\n')
-        
+            print('====================================')
+            print(dicionario.traduzirComando(aux))
+            dicionario.executaComando(aux, memoria)
+            print('pc = ' + str(memoria.getPC()))
+            memoria.setPC(memoria.pc - 1)
             for registrador in dicionario.memoriaRegistradores: 
-                string = str(dicionario.dicRegistradores[registrador]) + ' = ' + str(dicionario.memoriaRegistradores[registrador]) + '\n'
-                saida.write(str(string))
+                string = str(dicionario.dicRegistradores[registrador]) + ' = ' + str(dicionario.memoriaRegistradores[registrador])
+                saida.write(str(string) + '\n')
+                print(str(string))
                 saida.flush()
             aux = memoria.getPC()
-            saida.close
+            memoria.printMemoriaDeDados(saida)
+        saida.close()
+        print('Instruções Finalizadas!')
 
     elif tipoDeEntrada == '2':
         print('Execução por linha')
+        aux2 = 0 
+        aux = memoria.getPC()
+        saida = open('output.txt', 'w')
         while aux != -1:
-            saida = open('output.txt', 'w')
+            saida.write('====================================\n')
             saida.write(dicionario.traduzirComando(aux) + '\n')
-        
+            print('====================================')
+            print(dicionario.traduzirComando(aux))
+            print('pc = ' + str(memoria.getPC()))
+            memoria.setPC(memoria.pc - 1)
+            dicionario.executaComando(aux, memoria)
             for registrador in dicionario.memoriaRegistradores: 
-                string = str(dicionario.dicRegistradores[registrador]) + ' = ' + str(dicionario.memoriaRegistradores[registrador]) + '\n'
-                saida.write(str(string))
+                string = str(dicionario.dicRegistradores[registrador]) + ' = ' + str(dicionario.memoriaRegistradores[registrador])
+                saida.write(str(string) + '\n')
+                print(str(string))
                 saida.flush()
-
+            
             aux = memoria.getPC()
-            saida.close
-            input()
+            aux2 = input()
+            memoria.printMemoriaDeDados(saida)
+            if aux2 == '-1' or aux == '-1':
+                break
+        saida.close()
+        print('Instruções Finalizadas!')
 
     elif tipoDeEntrada == '3':
         print('reset')
@@ -107,14 +126,5 @@ if __name__ == "__main__":
     dicionario = dicionario()
     memoria = memoriaRAM(entrada, dicionario)
     i = 0
-    aux = memoria.getPC()
-    saida = open('output.txt', 'w')
-    while aux != -1:
-        saida.write(dicionario.traduzirComando(aux) + '\n')
-        dicionario.executaComando(aux, memoria)
-        for registrador in dicionario.memoriaRegistradores: 
-            string = str(dicionario.dicRegistradores[registrador]) + ' = ' + str(dicionario.memoriaRegistradores[registrador]) + '\n'
-            saida.write(str(string))
-            saida.flush()
-        aux = memoria.getPC()
-    saida.close()
+    menu()
+    

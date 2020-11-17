@@ -171,7 +171,7 @@ class dicionario:
             elif func == '000010':
                 self.j(alvo, memoria)
             elif func == '000011':
-                self.jal(alvo)
+                self.jal(alvo, memoria)
 
 
 # ---------- COMANDOS TYPE-R ----------
@@ -218,7 +218,6 @@ class dicionario:
 
     def addi(self, rs, rt, val):
         self.memoriaRegistradores[rs] = self.memoriaRegistradores[rt] + (int(val,2))
-        print()
 
     def lw(self, rs,rt,val):
         pos = '{0:05b}'.format(self.memoriaRegistradores[rt] + int(str(val), 10))
@@ -240,7 +239,11 @@ class dicionario:
         # pela soma do valor armazenado no registrador $r2 mais 4.     
     def beq(self, rs, rt, destino, memoria):
         if(self.memoriaRegistradores[rs] == self.memoriaRegistradores[rt]):
-            memoria.setPC(int(str(int(destino,2)),10))
+            aux = int(str(int(destino,2)),10)
+            aux /= 4
+            aux += memoria.pc
+            aux += 1
+            memoria.setPC(aux)
         # Essa função verifica se o valor de um registrador é igual ao outro.
         # Caso verdadeiro muda o valor de PC para o destino informado.
         # Caso falso não faz nada.
@@ -252,3 +255,11 @@ class dicionario:
     def j (self, destino, memoria):
         memoria.setPC(int(str(int(destino,2)),10))
         # Essa função faz com que o programa passe a executar a instrução encontrada no endereço informado.
+    
+    def jal(self, destino, memoria):
+        if int(str(int(destino,2)),10) > 31 and int(str(int(destino,2)),10) < 31 + memoria.quantInstrucoes: 
+            memoria.setPC(memoria.pc+3)
+            self.memoriaRegistradores['11111'] = memoria.getPC()
+            memoria.setPC(int(str(int(destino,2)),10))
+        else:
+            print('Posicao inexistente')
