@@ -1,3 +1,9 @@
+''' 
+    ALUNOS: 
+            MATHEUS HENRIQUE RUBIO DE MELO (201876036) SI
+            IAN COUTO DE PAULA (201876002) SI
+''' 
+
 memoria = []
 pc = 31
 
@@ -9,7 +15,7 @@ class memoriaRAM:
         self.pc = 31
         self.quantInstrucoes = 0
         i = 0
-        for pos in dicionario.dicRegistradores:
+        for pos in dicionario.dicionarioRegistradores:
             self.memoria.insert(i, pos)
             i += 1
 

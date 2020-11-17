@@ -1,3 +1,11 @@
+''' 
+    ALUNOS: 
+            MATHEUS HENRIQUE RUBIO DE MELO (201876036) SI
+            IAN COUTO DE PAULA (201876002) SI
+''' 
+#                                                !!!!!!!!!!!!!! ATENÇÃO !!!!!!!!!!!!
+# PARA COMPILAR E EXECUTAR O CÓDIGO BASTA TER A VERSÃO MAIS ATUALIZADA DO PYTHON 3 INSTALADA E DIGITAR MAIN.PY NO TERMINAL NO DIRETÓRIO DO PROJETO.
+
 from dicionario import dicionario
 from memoriaRAM import memoriaRAM
 
@@ -80,7 +88,7 @@ def menu2(dicionario):
             print('registradores: ')
             saida.write('\nregistradores:\n')
             for registrador in dicionario.memoriaRegistradores: 
-                string = str(dicionario.dicRegistradores[registrador]) + ' = ' + str(dicionario.memoriaRegistradores[registrador])
+                string = str(dicionario.dicionarioRegistradores[registrador]) + ' = ' + str(dicionario.memoriaRegistradores[registrador])
                 saida.write(str(string) + '\n')
                 print(str(string))
                 saida.flush()
@@ -105,7 +113,7 @@ def menu2(dicionario):
             print('registradores: ')
             saida.write('\nregistradores:\n')
             for registrador in dicionario.memoriaRegistradores: 
-                string = str(dicionario.dicRegistradores[registrador]) + ' = ' + str(dicionario.memoriaRegistradores[registrador])
+                string = str(dicionario.dicionarioRegistradores[registrador]) + ' = ' + str(dicionario.memoriaRegistradores[registrador])
                 saida.write(str(string) + '\n')
                 print(str(string))
             

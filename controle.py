@@ -1,3 +1,8 @@
+''' 
+    ALUNOS: 
+            MATHEUS HENRIQUE RUBIO DE MELO (201876036) SI
+            IAN COUTO DE PAULA (201876002) SI
+''' 
 
 class controle:
     

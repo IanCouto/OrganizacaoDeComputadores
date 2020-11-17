@@ -1,14 +1,20 @@
+''' 
+    ALUNOS: 
+            MATHEUS HENRIQUE RUBIO DE MELO (201876036) SI
+            IAN COUTO DE PAULA (201876002) SI
+''' 
+
 from controle import controle
-dicComandosR = dict()
-dicComandosIJ = dict()
-dicRegistradores = dict()
+dicionarioTypeR = dict()
+dicionarioTypeIJ = dict()
+dicionarioRegistradores = dict()
 memoriaRegistradores = dict()
 
 class dicionario:
     def __init__(self):
         self.controle = controle()
 
-        self.dicComandosR = {
+        self.dicionarioTypeR = {
             '100000': "add",
             '100010': "sub",
             '011000': "mult",
@@ -20,7 +26,7 @@ class dicionario:
             '001000': "jr",
         }
 
-        self.dicComandosIJ = {
+        self.dicionarioTypeIJ = {
             '001000': "addi",
             '100011': "lw",
             '101011': "sw",
@@ -30,7 +36,7 @@ class dicionario:
             '000011': "jal",
         }
 
-        self.dicRegistradores = {
+        self.dicionarioRegistradores = {
             '00000': "$zero",
             '00001': "$at",
             '00010': "$v0",
@@ -112,22 +118,22 @@ class dicionario:
         sa = comando[21:26]
         immediate = comando[16:32]
         alvo = comando[6:32]
-        if opcode == '000000' and func in self.dicComandosR:
+        if opcode == '000000' and func in self.dicionarioTypeR:
             if func == '001000':
-                return self.dicComandosR[func] + " " + self.dicRegistradores[rs]
+                return self.dicionarioTypeR[func] + " " + self.dicionarioRegistradores[rs]
             elif func == '000000':
-                return self.dicComandosR[func] + " " + self.dicRegistradores[rt] + " " + self.dicRegistradores[rd] + " " + hex(int(sa))
+                return self.dicionarioTypeR[func] + " " + self.dicionarioRegistradores[rt] + " " + self.dicionarioRegistradores[rd] + " " + hex(int(sa))
             else:  
-                return self.dicComandosR[func] + " " + self.dicRegistradores[rs] + " " + self.dicRegistradores[rt] + " " + self.dicRegistradores[rd]
-        elif func in self.dicComandosIJ:
+                return self.dicionarioTypeR[func] + " " + self.dicionarioRegistradores[rs] + " " + self.dicionarioRegistradores[rt] + " " + self.dicionarioRegistradores[rd]
+        elif func in self.dicionarioTypeIJ:
             if func == '001000':
-                return self.dicComandosIJ[func] + " " + self.dicRegistradores[rs] + " " + self.dicRegistradores[rt] + " " + str(int(immediate, 10))
+                return self.dicionarioTypeIJ[func] + " " + self.dicionarioRegistradores[rs] + " " + self.dicionarioRegistradores[rt] + " " + str(int(immediate, 10))
             elif func == '100011' or func == '101011':
-                return self.dicComandosIJ[func] + " " + self.dicRegistradores[rs] + " " + str(int(immediate,10)) + "(" + self.dicRegistradores[rt] + ")"
+                return self.dicionarioTypeIJ[func] + " " + self.dicionarioRegistradores[rs] + " " + str(int(immediate,10)) + "(" + self.dicionarioRegistradores[rt] + ")"
             elif func == '000010' or func == '000011':
-                return self.dicComandosIJ[func] + " " + hex(int(alvo))
+                return self.dicionarioTypeIJ[func] + " " + hex(int(alvo))
             else:
-                return self.dicComandosIJ[func] + " " + self.dicRegistradores[rs] + " " + self.dicRegistradores[rt] + " " + self.dicRegistradores[rd]
+                return self.dicionarioTypeIJ[func] + " " + self.dicionarioRegistradores[rs] + " " + self.dicionarioRegistradores[rt] + " " + self.dicionarioRegistradores[rd]
 
     def executaComando(self, comando, memoria, saida):
         opcode = comando[0:6] 
@@ -144,7 +150,7 @@ class dicionario:
         controle.controlVar(controle, opcode, func)
         controle.imprimeVar(controle, saida)
         saida.flush()
-        if opcode == '000000' and func in self.dicComandosR:
+        if opcode == '000000' and func in self.dicionarioTypeR:
             if func == '100000':
                 self.add(rs, rt, rd)
             elif func == '100010':
@@ -163,7 +169,7 @@ class dicionario:
                 self.sll(rt, rd, sa)
             elif func == '001000':
                 self.jr(rs, memoria)
-        elif func in self.dicComandosIJ:
+        elif func in self.dicionarioTypeIJ:
             if func == '001000':
                 self.addi(rs, rt, immediate)
             elif func == '100011':
