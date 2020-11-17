@@ -52,6 +52,6 @@ class memoriaRAM:
     def printMemoriaDeDados(self, saida):
         i = 32 + self.quantInstrucoes
         saida.write('\nMemoria de dados:\n')
-        while i < 106:
+        while i < len(self.memoria):
             saida.write(str(hex(i)) + ': ' + str(self.memoria[i]) + '\n')
             i += 1
