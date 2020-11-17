@@ -2,10 +2,9 @@ from dicionario import dicionario
 from memoriaRAM import memoriaRAM
 
 
-def __init__(self):
-    self.tipoDeEntrada = ''
-    self.entrada = ''
-    memoria = None
+tipoDeEntrada = ''
+entrada = ''
+memoria = None
 
 def entradaPorArquivo():
     global entrada
@@ -73,7 +72,7 @@ def menu2():
             saida.write(dicionario.traduzirComando(aux) + '\n')
             print('====================================')
             print(dicionario.traduzirComando(aux))
-            dicionario.executaComando(aux, memoria)
+            dicionario.executaComando(aux, memoria, saida)
             print('pc = ' + str(memoria.getPC()))
             memoria.setPC(memoria.pc - 1)
             for registrador in dicionario.memoriaRegistradores: 
@@ -93,12 +92,12 @@ def menu2():
         saida = open('output.txt', 'w')
         while aux != -1:
             saida.write('====================================\n')
-            saida.write(dicionario.traduzirComando(aux) + '\n')
             print('====================================')
-            print(dicionario.traduzirComando(aux))
             print('pc = ' + str(memoria.getPC()))
             memoria.setPC(memoria.pc - 1)
             dicionario.executaComando(aux, memoria)
+            print(dicionario.traduzirComando(aux))
+            saida.write('\n' + dicionario.traduzirComando(aux) + '\n')
             for registrador in dicionario.memoriaRegistradores: 
                 string = str(dicionario.dicRegistradores[registrador]) + ' = ' + str(dicionario.memoriaRegistradores[registrador])
                 saida.write(str(string) + '\n')

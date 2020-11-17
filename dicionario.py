@@ -1,3 +1,4 @@
+from controle import controle
 dicComandosR = dict()
 dicComandosIJ = dict()
 dicRegistradores = dict()
@@ -5,6 +6,8 @@ memoriaRegistradores = dict()
 
 class dicionario:
     def __init__(self):
+        self.controle = controle()
+
         self.dicComandosR = {
             '100000': "add",
             '100010': "sub",
@@ -126,7 +129,7 @@ class dicionario:
             else:
                 return self.dicComandosIJ[func] + " " + self.dicRegistradores[rs] + " " + self.dicRegistradores[rt] + " " + self.dicRegistradores[rd]
 
-    def executaComando(self, comando, memoria):
+    def executaComando(self, comando, memoria, saida):
         opcode = comando[0:6] 
         if opcode == '000000':
             func = comando[26:32]
@@ -138,6 +141,8 @@ class dicionario:
         sa = comando[21:26]
         immediate = comando[16:32]
         alvo = comando[6:32]
+        controle.controlVar(controle, opcode, func)
+        controle.imprimeVar(controle, saida)
         if opcode == '000000' and func in self.dicComandosR:
             if func == '100000':
                 self.add(rs, rt, rd)
