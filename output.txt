@@ -1,5 +1,4 @@
 ====================================
-sub $t2 $s0 $t1
 Variaveis de controle:
 memToReg: 0
 aluOP: 2
@@ -11,6 +10,127 @@ regDst: 1
 jump: 0
 branch: 0
 memRead: 0
+
+comando: add $t2 $s0 $t1
+pc = 00000001010100000100100000100000
+
+registradores:
+$zero = 1
+$at = 1
+$v0 = 1
+$v1 = 1
+$a0 = 1
+$a1 = 1
+$a2 = 1
+$a3 = 1
+$t0 = 1
+$t1 = 1
+$t2 = 2
+$t3 = 1
+$t4 = 1
+$t5 = 1
+$t6 = 1
+$t7 = 1
+$s0 = 1
+$s1 = 1
+$s2 = 1
+$s3 = 1
+$s4 = 1
+$s5 = 1
+$s6 = 1
+$s7 = 1
+$t8 = 1
+$t9 = 1
+$k0 = 1
+$k1 = 1
+$gp = 1
+$sp = 1
+$fp = 1
+$ra = 1
+
+Memoria de dados:
+0x29: 0
+0x2a: 2
+0x2b: 4
+0x2c: 6
+0x2d: 8
+0x2e: 10
+0x2f: 12
+0x30: 14
+0x31: 16
+0x32: 18
+0x33: 20
+0x34: 22
+0x35: 24
+0x36: 26
+0x37: 28
+0x38: 30
+0x39: 32
+0x3a: 34
+0x3b: 36
+0x3c: 38
+0x3d: 40
+0x3e: 42
+0x3f: 44
+0x40: 46
+0x41: 48
+0x42: 50
+0x43: 52
+0x44: 54
+0x45: 56
+0x46: 58
+0x47: 60
+0x48: 62
+0x49: 64
+0x4a: 66
+0x4b: 68
+0x4c: 70
+0x4d: 72
+0x4e: 74
+0x4f: 76
+0x50: 78
+0x51: 80
+0x52: 82
+0x53: 84
+0x54: 86
+0x55: 88
+0x56: 90
+0x57: 92
+0x58: 94
+0x59: 96
+0x5a: 98
+0x5b: 100
+0x5c: 102
+0x5d: 104
+0x5e: 106
+0x5f: 108
+0x60: 110
+0x61: 112
+0x62: 114
+0x63: 116
+0x64: 118
+0x65: 120
+0x66: 122
+0x67: 124
+0x68: 126
+0x69: 128
+====================================
+Variaveis de controle:
+memToReg: 0
+aluOP: 2
+memWrite: 0
+aluSRC: 0
+regWrite: 1
+bne: 0
+regDst: 1
+jump: 0
+branch: 0
+memRead: 0
+
+comando: sub $t2 $s0 $t1
+pc = 00000001010100000100100000100010
+
+registradores:
 $zero = 1
 $at = 1
 $v0 = 1
@@ -111,7 +231,6 @@ Memoria de dados:
 0x68: 126
 0x69: 128
 ====================================
-and $t2 $s2 $t1
 Variaveis de controle:
 memToReg: 0
 aluOP: 2
@@ -123,6 +242,11 @@ regDst: 1
 jump: 0
 branch: 0
 memRead: 0
+
+comando: and $t2 $s2 $t1
+pc = 00000001010100100100100000100100
+
+registradores:
 $zero = 1
 $at = 1
 $v0 = 1
@@ -223,7 +347,6 @@ Memoria de dados:
 0x68: 126
 0x69: 128
 ====================================
-or $t2 $s5 $t1
 Variaveis de controle:
 memToReg: 0
 aluOP: 2
@@ -235,6 +358,11 @@ regDst: 1
 jump: 0
 branch: 0
 memRead: 0
+
+comando: or $t2 $s5 $t1
+pc = 00000001010101010100100000100101
+
+registradores:
 $zero = 1
 $at = 1
 $v0 = 1
@@ -335,7 +463,6 @@ Memoria de dados:
 0x68: 126
 0x69: 128
 ====================================
-slt $t2 $s5 $t1
 Variaveis de controle:
 memToReg: 0
 aluOP: 2
@@ -347,6 +474,11 @@ regDst: 1
 jump: 0
 branch: 0
 memRead: 0
+
+comando: slt $t2 $s5 $t1
+pc = 00000001010101010100100000101010
+
+registradores:
 $zero = 1
 $at = 1
 $v0 = 1
@@ -447,7 +579,6 @@ Memoria de dados:
 0x68: 126
 0x69: 128
 ====================================
-sll $t2 $t1 0xb
 Variaveis de controle:
 memToReg: 0
 aluOP: 2
@@ -459,6 +590,11 @@ regDst: 1
 jump: 0
 branch: 0
 memRead: 0
+
+comando: sll $t2 $t1 0xb
+pc = 00000000000010100100100011000000
+
+registradores:
 $zero = 1
 $at = 1
 $v0 = 1
@@ -559,7 +695,6 @@ Memoria de dados:
 0x68: 126
 0x69: 128
 ====================================
-addi $s1 $s0 1
 Variaveis de controle:
 memToReg: 0
 aluOP: 0
@@ -571,6 +706,11 @@ regDst: 0
 jump: 0
 branch: 0
 memRead: 0
+
+comando: addi $s1 $s0 1
+pc = 00100010001100000000000000000001
+
+registradores:
 $zero = 1
 $at = 1
 $v0 = 1
@@ -671,7 +811,6 @@ Memoria de dados:
 0x68: 126
 0x69: 128
 ====================================
-lw $t2 11($t1)
 Variaveis de controle:
 memToReg: 1
 aluOP: 0
@@ -683,6 +822,11 @@ regDst: 0
 jump: 0
 branch: 0
 memRead: 1
+
+comando: lw $t2 11($t1)
+pc = 10001101010010010000000000000011
+
+registradores:
 $zero = 1
 $at = 1
 $v0 = 1
@@ -783,7 +927,6 @@ Memoria de dados:
 0x68: 126
 0x69: 128
 ====================================
-sw $t2 11($t1)
 Variaveis de controle:
 memToReg: 0
 aluOP: 0
@@ -795,6 +938,11 @@ regDst: 0
 jump: 0
 branch: 0
 memRead: 0
+
+comando: sw $t2 11($t1)
+pc = 10101101010010010000000000000011
+
+registradores:
 $zero = 1
 $at = 1
 $v0 = 1

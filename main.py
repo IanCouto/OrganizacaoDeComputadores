@@ -69,12 +69,14 @@ def menu2():
         saida = open('output.txt', 'w')
         while aux != -1:
             saida.write('====================================\n')
-            saida.write(dicionario.traduzirComando(aux) + '\n')
             print('====================================')
             print(dicionario.traduzirComando(aux))
             dicionario.executaComando(aux, memoria, saida)
-            print('pc = ' + str(memoria.getPC()))
-            memoria.setPC(memoria.pc - 1)
+            saida.write('\ncomando: ' + dicionario.traduzirComando(aux) + '\n')
+            saida.write('pc = ' + aux + '\n')
+            print('pc = ' + aux)
+            print('registradores: ')
+            saida.write('\nregistradores:\n')
             for registrador in dicionario.memoriaRegistradores: 
                 string = str(dicionario.dicRegistradores[registrador]) + ' = ' + str(dicionario.memoriaRegistradores[registrador])
                 saida.write(str(string) + '\n')
@@ -93,17 +95,19 @@ def menu2():
         while aux != -1:
             saida.write('====================================\n')
             print('====================================')
-            print('pc = ' + str(memoria.getPC()))
-            memoria.setPC(memoria.pc - 1)
-            dicionario.executaComando(aux, memoria)
+            dicionario.executaComando(aux, memoria, saida)
             print(dicionario.traduzirComando(aux))
-            saida.write('\n' + dicionario.traduzirComando(aux) + '\n')
+            saida.write('\ncomando: ' + dicionario.traduzirComando(aux) + '\n')
+            saida.write('pc = ' + aux + '\n')
+            print('pc = ' + aux)
+            print('registradores: ')
+            saida.write('\nregistradores:\n')
             for registrador in dicionario.memoriaRegistradores: 
                 string = str(dicionario.dicRegistradores[registrador]) + ' = ' + str(dicionario.memoriaRegistradores[registrador])
                 saida.write(str(string) + '\n')
                 print(str(string))
-                saida.flush()
-            
+                
+            saida.flush()
             aux = memoria.getPC()
             aux2 = input()
             memoria.printMemoriaDeDados(saida)

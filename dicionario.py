@@ -143,6 +143,7 @@ class dicionario:
         alvo = comando[6:32]
         controle.controlVar(controle, opcode, func)
         controle.imprimeVar(controle, saida)
+        saida.flush()
         if opcode == '000000' and func in self.dicComandosR:
             if func == '100000':
                 self.add(rs, rt, rd)

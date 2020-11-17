@@ -35,9 +35,9 @@ class memoriaRAM:
         return len(self.memoria)
 
     def getPC(self):
+        aux = self.memoria[self.pc]
         self.pc += 1
         self.pc = int(self.pc)
-        aux = self.memoria[self.pc]
         if(len(str(aux)) == len('00000000000000000000000000000000')):
             return aux
         else:
